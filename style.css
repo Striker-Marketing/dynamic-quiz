@@ -2,6 +2,21 @@
 body {
   font-family: Poppins;
 }
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes caretBlink {
+  50% {
+    opacity: 0;
+  }
+}
 [chat-wrapper] {
   display: flex;
   flex-direction: column;
@@ -21,6 +36,7 @@ body {
   justify-content: flex-start;
   gap: 16px;
   max-width: 415px;
+  animation: fadeInUp 0.35s ease-out both;
   img {
     width: 50px;
   }
@@ -34,12 +50,20 @@ body {
     margin: 0;
     border-radius: 20px 20px 20px 5px;
   }
+  &.is-typing p::after {
+    content: "▍";
+    display: inline-block;
+    margin-left: 2px;
+    opacity: 0.7;
+    animation: caretBlink 0.8s steps(1) infinite;
+  }
 }
 .chat-loading{
   padding: 18px 20px;
   fill: white;
   background-color: #19301e;
   border-radius: 20px 20px 20px 5px;
+  animation: fadeInUp 0.35s ease-out both;
 }
 .chat-answer{
   margin-left: auto;
@@ -68,6 +92,7 @@ body {
   font-weight: 300;
   line-height: 130%;
   letter-spacing: -0.16px;
+  animation: fadeInUp 0.35s ease-out both;
   span {
     border: 2px solid #dcdce6;
     width: 12px;
