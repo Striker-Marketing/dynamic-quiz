@@ -16,10 +16,10 @@
 }
 [chat-wrapper] {
   display: flex;
+  width: 100%;
   flex-direction: column;
   gap: 40px;
   font-family: inherit;
-  max-width: 800px;
   margin: auto;
 }
 .chat-question-wrapper {
