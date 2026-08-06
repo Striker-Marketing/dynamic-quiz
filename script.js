@@ -1,4 +1,4 @@
-const createChat = ({ icon, flow, delayTime, typeSpeed = 18 }) => {
+const createChat = ({ icon, flow, delayTime, typeSpeed = 18, endTime, onEnd }) => {
   const wrapper = document.querySelector("[chat-wrapper]");
 
   const scrollToBottom = () => {
@@ -123,61 +123,14 @@ const createChat = ({ icon, flow, delayTime, typeSpeed = 18 }) => {
         await typeBubble(answerBubble, answerText);
       }
     }
-    if (!items[index + 1]) return;
+    if (!items[index + 1]) {
+      setTimeout(() => {
+        onEnd();
+      }, endTime);
+      return;
+    }
     return recursiveFlow({ items, index: index + 1 });
   };
 
   recursiveFlow({ items: flow, index: 0 });
 };
-
-createChat({
-  icon: "https://cdn.prod.website-files.com/6866c4ad9c0a0e8deec59d3f/6a7499542ac15a466cd16c9b_clinician_image.webp",
-  delayTime: 1500,
-  flow: [
-    {
-      question: "O que você sente que te impede de emagrecer",
-      id: "o-que-impede",
-      type: "options",
-      options: [
-        { text: "Não ter o suporte correto", value: "nao-tem-suporte" },
-        { text: "Food noise e falta de controle com comida", value: "food-noise" },
-        { text: "Nada, apenas quero começar", value: "nada" },
-      ],
-      answers: {
-        "nao-tem-suporte": "Isso muda tudo e é o que mais nos preocupamos. Você ganha acesso 24 horas ao nosso time e acompanhamento nutricional para garantir que o seu plano seja para você e nunca te deixar sozinha.",
-        "food-noise": "Isso muda tudo e é o que mais nos preocupamos. Você ganha acesso 24 horas ao nosso time e acompanhamento nutricional para garantir que o seu plano seja para você e nunca te deixar sozinha.",
-        nada: "Isso muda tudo e é o que mais nos preocupamos. Você ganha acesso 24 horas ao nosso time e acompanhamento nutricional para garantir que o seu plano seja para você e nunca te deixar sozinha.",
-      },
-    },
-    {
-      question: "Quando você pensa em medicamentos para emagrecer, qual sua reação?",
-      id: "reacao-medicamento",
-      type: "options",
-      options: [
-        { text: "Não sei se posso usar", value: "nao-sabe-pode-usar" },
-        { text: "Quero começar logo", value: "quer-comecar-logo" },
-        { text: "Quero, mas tenho preocupações com efeitos colaterais", value: "quer-mas-preocupa" },
-      ],
-      answers: {
-        "nao-sabe-pode-usar": "Geralmente pessoas com IMC a partir de 27 são elegíveis ao medicamento e o tratamento. Além disso, médicos independentes vão avaliar o seu caso para garantir que você é elegível e tenha o melhor tratamento.",
-        "quer-comecar-logo": "Você está no caminho certo e vamos garantir que você tenha o tratamento correto conforme o seu caso.",
-        "quer-mas-preocupa": "É por isso que temos acompanhamento, WhatsApp 24 horas e montamos um plano personalizado para você. Caso algum efeito colateral apareça estaremos com você sempre para garantir que você está bem.",
-      },
-    },
-    {
-      question: "Se você começar hoje, o que você precisa para continuar?",
-      id: "o-que-precisa",
-      type: "options",
-      options: [
-        { text: "Suporte contínuo e apoio nutricional", value: "suporte-continuo" },
-        { text: "Acesso 24hrs para dúvidas", value: "acesso-24hrs" },
-        { text: "Tudo isso e 30% de desconto!", value: "tudo-e-desconto" },
-      ],
-      answers: {
-        "suporte-continuo": "É isso que vamos dar para você: check-ins regulares e acesso ao nosso WhatsApp 24 horas, mantendo seu progresso constante!<br><br>Parabéns, você desbloqueou mais de 600 reais em desconto na primeira compra!<br><br>- Complete o quiz<br>- Confirme o pagamento<br>- Caso aprovado receba tudo em casa",
-        "acesso-24hrs": "Com a Voy você tem um WhatsApp 24 horas e nunca estará sozinha. Você nunca ficará sem respostas ou ajustando sozinha o seu tratamento.<br><br>Parabéns, você desbloqueou mais de 600 reais em desconto na primeira compra!<br><br>- Complete o quiz<br><br>- Confirme o pagamento<br><br>- Caso aprovado receba tudo em casa",
-        "tudo-e-desconto": "Parabéns, você desbloqueou mais de 600 reais em desconto na primeira compra com a Voy!<br><br>- Complete o quiz<br><br>- Confirme o pagamento<br><br>- Caso aprovado receba tudo em casa",
-      },
-    },
-  ],
-});

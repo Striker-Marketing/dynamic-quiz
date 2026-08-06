@@ -1,7 +1,4 @@
-@import "reset.css";
-body {
-  font-family: Poppins;
-}
+/* @import "reset.css"; */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -58,12 +55,20 @@ body {
     animation: caretBlink 0.8s steps(1) infinite;
   }
 }
+@media screen and (max-width: 500px){
+  .chat-question p{
+    font-size: 16px;
+  }
+}
 .chat-loading{
   padding: 18px 20px;
   fill: white;
   background-color: #19301e;
   border-radius: 20px 20px 20px 5px;
   animation: fadeInUp 0.35s ease-out both;
+  display: block;
+  width: 64px;
+  height: 60px;
 }
 .chat-answer{
   margin-left: auto;
