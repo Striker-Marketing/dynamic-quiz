@@ -12,7 +12,7 @@ A tiny, dependency-free chat widget that plays a scripted conversation with type
 Add a container with the `chat-wrapper` attribute, include the stylesheet and script, then call `createChat`.
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Striker-Marketing/dynamic-quiz@1/style.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Striker-Marketing/dynamic-quiz@1/style.css" />
 <script defer src="https://cdn.jsdelivr.net/gh/Striker-Marketing/dynamic-quiz@1/script.min.js"></script>
 
 <div chat-wrapper></div>
