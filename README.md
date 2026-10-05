@@ -145,6 +145,26 @@ Empty submissions are ignored, so the flow only advances once the user types som
 
 Invalid numbers are rejected with an inline message, so the flow only advances once a valid number is entered.
 
+### Sending an HTTP request (`sendExternal`)
+
+**Any** flow item (a plain message or any input type) may include a `sendExternal` function and an `errorMessage`. After the item is answered, `sendExternal()` runs (loading dots are shown while it's in flight) and the flow is gated on its result:
+
+```js
+{
+  // …any item (message, options, text, email, tel, checkboxes)…
+  sendExternal: async () => {
+    const res = await fetch("https://example.com/lead", { method: "POST", body: /* … */ });
+    return res.ok; // truthy = valid → flow continues; falsy or throw = invalid → halts
+  },
+  errorMessage: "Oops — we couldn't submit that. Please try again.",
+}
+```
+
+- A **truthy** resolved value means success: the flow continues to the next item (and fires `onEnd` if this was the last one).
+- A **falsy** value **or a thrown/rejected** promise means failure: the `errorMessage` is shown as a bot bubble and the flow **halts** (it does not advance and `onEnd` does not fire).
+- `sendExternal` is called with no arguments — read whatever you need inside it.
+- If `errorMessage` is omitted, a localized default is shown (respects the `lang` option).
+
 ## Notes
 
 - The container is auto-scrolled to the bottom as new content appears.

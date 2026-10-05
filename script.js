@@ -8,6 +8,7 @@ const createChat = ({ icon, flow, delayTime, typeSpeed = 18, endTime, onEnd, lan
       invalidEmail: "Please enter a valid email address.",
       invalidPhone: "Please enter a valid phone number.",
       selectAtLeastOne: "Please select at least one option.",
+      genericError: "Something went wrong. Please try again.",
     },
     pt: {
       send: "Enviar",
@@ -15,6 +16,7 @@ const createChat = ({ icon, flow, delayTime, typeSpeed = 18, endTime, onEnd, lan
       invalidEmail: "Por favor, insira um e-mail válido.",
       invalidPhone: "Por favor, insira um número de telefone válido.",
       selectAtLeastOne: "Por favor, selecione pelo menos uma opção.",
+      genericError: "Algo deu errado. Por favor, tente novamente.",
     },
   };
   // Fallback to Portuguese for an unset or unrecognized language.
@@ -352,6 +354,24 @@ const createChat = ({ icon, flow, delayTime, typeSpeed = 18, endTime, onEnd, lan
       input.setAttribute("disabled", "disabled");
       button.setAttribute("disabled", "disabled");
       wrapper.appendChild(createText({ text: value, isAnswer: true }));
+    }
+    if (item.sendExternal) {
+      const loading = createText({ svg: loadingSvg });
+      wrapper.appendChild(loading);
+      let valid = false;
+      try {
+        valid = Boolean(await item.sendExternal());
+      } catch {
+        valid = false;
+      }
+      loading.remove();
+      if (!valid) {
+        const errorText = item.errorMessage || t.genericError;
+        const errorBubble = createText({ text: errorText });
+        wrapper.appendChild(errorBubble);
+        await typeBubble(errorBubble, errorText);
+        return;
+      }
     }
     if (!items[index + 1]) {
       setTimeout(() => {
