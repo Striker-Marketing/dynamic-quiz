@@ -59,6 +59,32 @@ Add a container with the `chat-wrapper` attribute, include the stylesheet and sc
 | `endTime`   | number   | Milliseconds to wait after the last step before firing `onEnd`.     |
 | `onEnd`     | function | Callback fired when the flow finishes.                              |
 | `lang`      | string   | UI language for built-in strings (errors, buttons): `"en"` or `"pt"`. Defaults to `"pt"` (Portuguese) when unset or unrecognized. |
+| `colors`    | object   | Overrides the widget's colors (see below). Any subset of keys; omitted keys keep the defaults. |
+
+### `colors`
+
+Pass a `colors` object to recolor the widget. Each key maps to a semantic part of the UI; any valid CSS color value works, and only the keys you set are changed:
+
+| Key            | Default   | Applies to                                                              |
+| -------------- | --------- | ----------------------------------------------------------------------- |
+| `primary`      | `#1a3d5c` | Bot bubbles, buttons, checkbox fill, option & input text.               |
+| `primaryHover` | `#12293f` | Send/confirm button hover background.                                   |
+| `onPrimary`    | `#ffffff` | Text/icons on top of `primary` (bubble text, button text, loading dots).|
+| `accent`       | `#cfe4ff` | User (answer) bubble, selected-option fill.                             |
+| `onAccent`     | `#0b2033` | User bubble text, selected-option border.                               |
+| `border`       | `#dcdce6` | Option, radio, checkbox, and input field borders.                       |
+| `error`        | `#c0392b` | Inline validation error text.                                           |
+
+```js
+createChat({
+  flow: [/* … */],
+  colors: {
+    primary: "#19301e",
+    accent: "#d1e9d2",
+    onAccent: "black",
+  },
+});
+```
 
 ## Flow item shape
 

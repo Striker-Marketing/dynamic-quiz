@@ -1,5 +1,22 @@
-const createChat = ({ icon, flow, delayTime, typeSpeed = 18, endTime, onEnd, lang }) => {
+const createChat = ({ icon, flow, delayTime, typeSpeed = 18, endTime, onEnd, lang, colors }) => {
   const wrapper = document.querySelector("[chat-wrapper]");
+
+  // Map public color keys to the CSS custom properties defined on [chat-wrapper].
+  // Only keys the caller provides are applied; omitted ones keep the CSS defaults.
+  const COLOR_VARS = {
+    primary: "--chat-primary",
+    primaryHover: "--chat-primary-hover",
+    onPrimary: "--chat-on-primary",
+    accent: "--chat-accent",
+    onAccent: "--chat-on-accent",
+    border: "--chat-border",
+    error: "--chat-error",
+  };
+  if (colors) {
+    for (const [key, cssVar] of Object.entries(COLOR_VARS)) {
+      if (colors[key]) wrapper.style.setProperty(cssVar, colors[key]);
+    }
+  }
 
   const TRANSLATIONS = {
     en: {
